@@ -3,12 +3,10 @@ package ViewLayer;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import DBManager.ConnectToDB_H;
-import LogManager.LogWriter;
+
 
 
 public class Frame {
@@ -39,7 +37,11 @@ public class Frame {
 		p3=p.addButton33(p3);
 		p0=p.addTextField0(p0);
 		p0=p.addComboBox0(p0);
-		p0=p.addButton0(p0);
+		p0=p.addComboBox000(p0);
+		p0=p.addButtonCUT0(p0);
+		p0=p.addButtonInsert0(p0);
+		p0=p.addComboBox00(p0);
+		p0=p.addButtonAdd0(p0);
 		p4=p.addComboBox4(p4);
 		p4=p.addTextField4(p4);
 	    p1=p.addTables1(p1);

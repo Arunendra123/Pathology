@@ -20,69 +20,6 @@
                 <target>1.6</target>
             </configuration>
         </plugin>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-shade-plugin</artifactId>
-            <version>1.7.1</version>
-            <executions>
-                <execution>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>shade</goal>
-                    </goals>
-                </execution>
-            </executions>
-            <configuration>
-                <shadedArtifactAttached>true</shadedArtifactAttached>
-                <shadedClassifierName>shaded</shadedClassifierName>
-                <transformers>
-                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                        <mainClass>main.main</mainClass>
-                    </transformer>
-                </transformers>
-            </configuration>
-        </plugin>
-        <plugin>
-            <groupId>com.akathist.maven.plugins.launch4j</groupId>
-            <artifactId>launch4j-maven-plugin</artifactId>
-            <version>1.5.1</version>
-            <executions>
-                <execution>
-                    <id>l4j-clui</id>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>launch4j</goal>
-                    </goals>
-                    <configuration>
-                        <headerType>gui</headerType>
-                        <jar>${project.build.directory}/${artifactId}-${version}-shaded.jar</jar>
-                        <outfile>${project.build.directory}/pathology.exe</outfile>
-                        <downloadUrl>http://java.com/download</downloadUrl>
-                        <classPath>
-                            <mainClass>main.main</mainClass>
-                            <preCp>anything</preCp>
-                        </classPath>
-                        <icon>maaVindhya.ico</icon>
-                        <jre>
-                            <minVersion>1.6.0</minVersion>
-                            <jdkPreference>preferJre</jdkPreference>
-                        </jre>
-                        <versionInfo>
-                            <fileVersion>1.0.0.0</fileVersion>
-                            <txtFileVersion>${project.version}</txtFileVersion>
-                            <fileDescription>${project.name}</fileDescription>
-                            <copyright>2021 pathology.com</copyright>
-                            <productVersion>1.0.0.0</productVersion>
-                            <txtProductVersion>1.0.0.0</txtProductVersion>
-                            <productName>${project.name}</productName>
-                            <companyName>pathology.com</companyName>
-                            <internalName>pathology</internalName>
-                            <originalFilename>pathology.exe</originalFilename>
-                        </versionInfo>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
     </plugins>
 </build>
 <dependencies> 
@@ -91,25 +28,29 @@
     <artifactId>poi-ooxml</artifactId>
     <version>5.0.0</version>
 </dependency>
-  <dependency>
+<dependency>
     <groupId>com.microsoft.sqlserver</groupId>
     <artifactId>mssql-jdbc</artifactId>
-    <version>9.2.1.jre15</version>
- </dependency>
+    <version>9.2.1.jre8</version>
+</dependency> 
   <dependency>
     <groupId>org.hibernate</groupId>
     <artifactId>hibernate-core</artifactId>
     <version>5.4.30.Final</version>
   </dependency>
-  <dependency>
+  <!-- https://mvnrepository.com/artifact/javax.activation/activation -->
+<dependency>
+    <groupId>javax.activation</groupId>
+    <artifactId>activation</artifactId>
+    <version>1.1.1</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+<dependency>
     <groupId>javax.mail</groupId>
     <artifactId>mail</artifactId>
-    <version>1.4</version>
+    <version>1.4.7</version>
 </dependency>
-  <dependency>
-    <groupId>com.sun.mail</groupId>
-    <artifactId>smtp</artifactId>
-    <version>1.4.5</version>
-</dependency>
+
+  
 </dependencies>
 </project>

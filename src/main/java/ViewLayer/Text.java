@@ -18,55 +18,7 @@ public class Text {
         t.setFont(f);
 		return t;
     }
-	
-	public void loadTextField() {
-		LocalDate currentdate = LocalDate.now();
-		String date[]=currentdate.toString().split("-");
-		t0.setText(currentdate.toString());
-		t8.setText(date[0]);
-		t2.setText("0");
-		t3.setText("0");
-		t4.setText("0");
-		t5.setText("0");
-		t6.setText("0");	
-	}
-	
-	public void SetTextFieldAfterInsert() {
-		t1.setText("");
-		t2.setText("0");
-		t3.setText("0");
-		t4.setText("0");
-		t5.setText("0");
-		t6.setText("0");	
-	}
-	
-	private static boolean isNumber(String text) {
-		  try {
-		         Integer.parseInt(text);
-		         return true;
-		      } catch (NumberFormatException e) {
-		         return false;
-		      }
-	}
-	public void SetCutAmount(int percent) {
-		if(isNumber(t3.getText().toString())) {
-			int paid=Integer.parseInt(t3.getText().toString());
-			int cut=(paid*percent)/100;
-			t6.setText(cut+"");
-		}
-	}
-	
-	public void SetCutAmount() {
-		if(isNumber(t3.getText().toString())&&isNumber(t2.getText().toString())) {
-			int paid=Integer.parseInt(t3.getText().toString());
-			int full=Integer.parseInt(t2.getText().toString());
-			int cut=(full/2)-(full-paid);
-			if(cut>=0) {
-				t6.setText(cut+"");
-			}
-		}
-	}
-	
+		
     public JPanel addTextFieldToPanel0(JPanel jp) {
  	  t0=this.getTextField(107);
 	  t1=this.getTextField(152);

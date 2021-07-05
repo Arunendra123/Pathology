@@ -8,8 +8,6 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
-import javax.swing.JPanel;
-
 public class PrintComponent {
 	public void printComponenet(final Component component){
 		  PrinterJob pj = PrinterJob.getPrinterJob();

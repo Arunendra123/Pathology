@@ -1,14 +1,20 @@
-package Base;
+package ExcelReport;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import Base.BaseFileReader;
+import Base.MonthProperties;
+import Base.PathHandler;
 import DBManager.ConnectToDB_H;
 import DBManager.ReadItemsFromDB;
 import ExcelManager.PathItems;
 import ExcelManager.Writer;
+import LogManager.LogWriter;
+import Operations.TableOperations;
 import ViewLayer.ComboBox;
 import ViewLayer.Text;
 
@@ -27,33 +33,13 @@ public class MonthlyReport {
     }
     
     public List<PathItems> getTableForDoctor(String doctorName) {
-    	if(doctorName.equals("All")) {
-                  /////////////////////////////
-                  ConnectToDB_H ctdh=new ConnectToDB_H();
-                  ReadItemsFromDB rifb=new ReadItemsFromDB(ctdh);
-                  List<PathItems> pathItems=new ArrayList<PathItems>();
-                  pathItems=rifb.getItemList("FROM PathItems P WHERE P.month = :month and P.year = :year",this.month,this.year);
-                  /////////////////////////////
-                  return pathItems;
-    	}else {
-		           /////////////////////////////
-		           ConnectToDB_H ctdh=new ConnectToDB_H();
-		           ReadItemsFromDB rifb=new ReadItemsFromDB(ctdh);
-		           List<PathItems> pathItems=new ArrayList<PathItems>();
-		           pathItems=rifb.getItemList("FROM PathItems P WHERE P.doctorName = :doctorName and P.month = :month and P.year = :year",doctorName,this.month,this.year);
-		           /////////////////////////////
-		           return pathItems;
-    	}
+    	TableOperations to=new TableOperations();
+        return to.getTableForDoctor(doctorName, this.month, this.year);
 	}
     
     public List<PathItems> getTableForDay(int day) {
-                  /////////////////////////////
-                  ConnectToDB_H ctdh=new ConnectToDB_H();
-                  ReadItemsFromDB rifb=new ReadItemsFromDB(ctdh);
-                  List<PathItems> pathItems=new ArrayList<PathItems>();
-                  pathItems=rifb.getItemList("FROM PathItems P WHERE P.month = :month and P.year = :year and P.day = :day",this.month,this.year,day);
-                  /////////////////////////////
-                  return pathItems;
+                  TableOperations to=new TableOperations();
+                  return to.getTableForDay(day, this.month, this.year);
 	}
 
     public void generateMonthlyReport() {
@@ -87,7 +73,7 @@ public class MonthlyReport {
     		    workbook2=wr2.generateReportMerge(spreadsheet2,workbook2,tmpList,doctorName);
 				System.out.print("...");
 			} catch (Exception e) {
-				e.printStackTrace();
+				LogWriter.WriteLogs("Class:MonthlyReport,Method:generateMonthlyReport"+e);
 			}
     	}
     	
@@ -101,7 +87,7 @@ public class MonthlyReport {
 			workbook2.close();
 			wr2.getOut().close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			LogWriter.WriteLogs("Class:MonthlyReport,Method:generateMonthlyReport"+e);
 		}
     	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
@@ -122,7 +108,7 @@ public class MonthlyReport {
     			     workbook3=wr3.generateReportForEachDay(workbook3,tmpList,i);
     			}
 			} catch (Exception e) {
-				e.printStackTrace();
+				LogWriter.WriteLogs("Class:MonthlyReport,Method:generateDailyReport"+e);
 			}
     	}
     	
@@ -132,7 +118,7 @@ public class MonthlyReport {
 			workbook3.close();
 			wr3.getOut().close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			LogWriter.WriteLogs("Class:MonthlyReport,Method:generateDailyReport"+e);
 		}
     	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

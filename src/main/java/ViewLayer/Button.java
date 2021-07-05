@@ -4,21 +4,19 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
 import Base.BaseFileWriter;
-import Base.MonthlyReport;
 import Base.PathHandler;
 import ExcelManager.PathItems;
+import ExcelReport.MonthlyReport;
 import LogManager.LogWriter;
-
+import Operations.TableOperations;
+import Operations.TextOperations;
 
 public class Button extends LogWriter{
-	static JButton b0,b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11;
+	static JButton b0,b1,b2,b3,b4,b5,b10,b11,b12,b13;
 	public JButton getButton(String str) {
 		
 		JButton b=new JButton (str);
@@ -31,14 +29,17 @@ public class Button extends LogWriter{
 			  public void actionPerformed(ActionEvent e) { 
 				  int input = JOptionPane.showConfirmDialog(null, "Are you sure?");
 				  if(input==0) {
-					  Table t=new Table();
+					  TableOperations t=new TableOperations();
 					  PathItems pi=new PathItems();
-					  pi=PathItemsMaper.mapItemsFromTable(pi);
+					  int SelectedRow= Table.t0.getSelectedRow();
+					  pi=PathItemsMaper.mapItemsFromTable_1(pi,SelectedRow);
 					  t.deleteSelectedRowFromJtable(pi);
 					  LogWriter.WriteLogs("Deleted: "+PathItems.getStringForItems(pi));
-					  TextArea.ta2.append("Deleted Entry- PTName: "+pi.getPtName()+", DoctorName:"+pi.getDoctorName()+"\n");
+					  t.removeAllRow();
+					  t.loadTable();
+					  JOptionPane.showMessageDialog(null, "Entry is Deleted");
 				  }
-			  } 
+			  }
 		} );
 		}
 		
@@ -47,13 +48,18 @@ public class Button extends LogWriter{
 		b.addActionListener(new ActionListener() { 
 				public void actionPerformed(ActionEvent e) { 
 				  if(PathItemsMaper.validateTableFields()) {
-						  Table t=new Table();
+					     TableOperations t=new TableOperations();
 						  PathItems pi=new PathItems();
-						  pi=PathItemsMaper.mapItemsFromTable(pi);
-						  t.updateSelectedRowFromJtable(pi);
-						  LogWriter.WriteLogs("Updated: "+PathItems.getStringForItems(pi));
-						  TextArea.ta2.append("Updated Entry- PTName: "+pi.getPtName()+", DoctorName:"+pi.getDoctorName()+"\n");
+						  int SelectedRows[] = Table.t0.getSelectedRows();
+						  for(int SelectedRow:SelectedRows) {
+							  pi=PathItemsMaper.mapItemsFromTable_1(pi,SelectedRow);
+							  t.updateSelectedRowFromJtable(pi);
+							  LogWriter.WriteLogs("Updated: "+PathItems.getStringForItems(pi));
 						  }
+						  t.removeAllRow();
+						  t.loadTable();
+						  JOptionPane.showMessageDialog(null, "Entries are Updated");
+						 }
 					  } 
 				} );
 		}
@@ -63,14 +69,15 @@ public class Button extends LogWriter{
 			b.addActionListener(new ActionListener() { 
 				  public void actionPerformed(ActionEvent e) { 
 					  if(PathItemsMaper.validateTextFields()) {
-						  Table t=new Table();
-						  Text txt=new Text();
+						  TableOperations t=new TableOperations();
+						  TextOperations txt=new TextOperations();
 						  PathItems pi=new PathItems();
 						  pi=PathItemsMaper.mapItemsFromTextBox(pi);
 						  t.addRow(pi);
 						  LogWriter.WriteLogs("Inserted: "+PathItems.getStringForItems(pi));
-						  TextArea.ta2.append("Inserted Entry- PTName: "+pi.getPtName()+", DoctorName:"+pi.getDoctorName()+"\n");
 						  txt.SetTextFieldAfterInsert();
+						  t.removeAllRow();
+						  t.loadTable();
 					  }
 				  } 
 			} );
@@ -84,7 +91,6 @@ public class Button extends LogWriter{
 				 BaseFileWriter  bfw=new BaseFileWriter(new PathHandler("doctorList","resources"));  
 				 bfw.writeFromTextArea(TextArea.ta1);
 				 JOptionPane.showMessageDialog(null, "Doctor name added to list. Please exit and open the app again");
-				 TextArea.ta2.append("Doctor's Name added. Please re-open app\n");
 			 } 
 		} );
 		}
@@ -94,9 +100,8 @@ public class Button extends LogWriter{
 				b.addActionListener(new ActionListener() { 
 				 @SuppressWarnings("unchecked")
 				 public void actionPerformed(ActionEvent e) { 
-				 Table t=new Table();
+				 TableOperations t=new TableOperations();
 				 t.loadTableForDoctor();
-				 TextArea.ta2.append("Table has been loaded\n");
 			 } 
 		} );
 		}
@@ -108,7 +113,7 @@ public class Button extends LogWriter{
 				 public void actionPerformed(ActionEvent e) { 
 				 PrintComponent pc=new PrintComponent();
 				 pc.printComponenet(Frame.p1);
-				 TextArea.ta2.append("Printing Documents.\n");
+				
 			} 
 		} );
 		}
@@ -118,11 +123,10 @@ public class Button extends LogWriter{
 			b.addActionListener(new ActionListener() {
 			 @SuppressWarnings("unchecked")
 			 public void actionPerformed(ActionEvent e) { 
-			 TextArea.ta2.append("Generating Reports...\n");
 			 MonthlyReport mr=new MonthlyReport();
 			 mr.generateMonthlyReport();
 			 JOptionPane.showMessageDialog(null, "Reports generated");
-			 TextArea.ta2.append("Reports generated\n");
+			 
 		} 
 	    } );
 		}
@@ -132,102 +136,65 @@ public class Button extends LogWriter{
 					b.addActionListener(new ActionListener() {
 					 @SuppressWarnings("unchecked")
 					 public void actionPerformed(ActionEvent e) { 
-					 TextArea.ta2.append("Generating Reports...\n");
 					 MonthlyReport mr=new MonthlyReport();
 					 mr.generateDailyReport();
 					 JOptionPane.showMessageDialog(null, "Reports generated");
-					 TextArea.ta2.append("Reports generated\n");
+					 
 		} 
 	    } );
 		}
-		
-	       //Print Items
-		if(str.equals("30%")) {
-				b.addActionListener(new ActionListener() { 
-				 @SuppressWarnings("unchecked")
-				 public void actionPerformed(ActionEvent e) { 
-				 Text tx=new Text();
-				 tx.SetCutAmount(30);
-			} 
-		} );
-		}
-		
-		//Print Items
-		if(str.equals("40%")) {
-				b.addActionListener(new ActionListener() { 
-				 @SuppressWarnings("unchecked")
-				 public void actionPerformed(ActionEvent e) { 
-				 Text tx=new Text();
-				 tx.SetCutAmount(40);
-			} 
-		} );
-		}
-		
-		//Print Items
-		if(str.equals("50%")) {
-				b.addActionListener(new ActionListener() { 
-				 @SuppressWarnings("unchecked")
-				 public void actionPerformed(ActionEvent e) { 
-				 Text tx=new Text();
-				 tx.SetCutAmount(50);
-			} 
-		} );
-		}
-		
-		//Print Items
-		if(str.equals("60%")) {
-				b.addActionListener(new ActionListener() { 
-				 @SuppressWarnings("unchecked")
-				 public void actionPerformed(ActionEvent e) { 
-				 Text tx=new Text();
-			     tx.SetCutAmount(60);
-			} 
-		} );
-		}
-		
+				
 		//Print Items
 		if(str.equals("CUT")) {
-				b.addActionListener(new ActionListener() { 
-			    @SuppressWarnings("unchecked")
-			    public void actionPerformed(ActionEvent e) { 
-				Text tx=new Text();
-				tx.SetCutAmount();
-			} 
-		} );
+			b.addActionListener(new ActionListener() { 
+				  @SuppressWarnings("unchecked")
+				  public void actionPerformed(ActionEvent e) { 
+				  TextOperations tx=new TextOperations();
+				  if(ComboBox.combobox3.getSelectedItem().toString().equals("CUT")) {
+					    tx.SetCutAmount();
+			      }else {
+					    tx.SetCutAmount(Integer.parseInt(ComboBox.combobox3.getSelectedItem().toString()));
+				  }
+			  } 
+			});	
 		}
+		
+		
+		//Print Items
+		if(str.equals("Add")) {
+			b.addActionListener(new ActionListener() { 
+				   @SuppressWarnings("unchecked")
+				   public void actionPerformed(ActionEvent e) { 
+			       String str=Text.t5.getText().toString();
+			       str=str.equals("")?ComboBox.combobox2.getSelectedItem().toString():str+","+ComboBox.combobox2.getSelectedItem().toString();
+			       Text.t5.setText(str);
+			    } 
+			});	
+		}
+				
 		return b;
 	}
 	
-	public JPanel addButtonToPanel0(JPanel jp) {
+	public JPanel addButtonToPanelInsert0(JPanel jp) {		
 		  b0=this.getButton("Insert");
-		  b1=this.getButton("Update");
-		  b2=this.getButton("Delete");
-		  b5=this.getButton("Load Table");
-		  b6=this.getButton("60%");
-		  b7=this.getButton("50%");
-		  b8=this.getButton("40%");
-		  b9=this.getButton("30%");
-		  b11=this.getButton("CUT");
-		  b6.setPreferredSize(new Dimension(60,20));
-		  b7.setPreferredSize(new Dimension(60,20));
-		  b8.setPreferredSize(new Dimension(60,20));
-		  b9.setPreferredSize(new Dimension(60,20));
-		  b11.setPreferredSize(new Dimension(60,20));
+		  b0. setPreferredSize(new Dimension(120,25));		  
 		  Color color1 = new Color(60,179,113);
-		  Color color2 = new Color(240,128,128);
-		  Color color3 = new Color(255,215,0);
-		  b0.setBackground(color1);
-		  b2.setBackground(color2);
-		  b5.setBackground(color3);
+		  b0.setBackground(color1);		  
 		  jp.add(b0);
-		  jp.add(b1);
-		  jp.add(b2);
-		  jp.add(b5);
+		  return jp;
+	}
+	
+	public JPanel addButtonToPanelCUT0(JPanel jp) {
+		  b11=this.getButton("CUT");
+		  b11.setPreferredSize(new Dimension(60,18));		  
 		  jp.add(b11);
-		  jp.add(b6);
-		  jp.add(b7);
-		  jp.add(b8);
-		  jp.add(b9);
+		  return jp;
+	}
+	
+	public JPanel addButtonToPanelAdd0(JPanel jp) {
+		  b13=this.getButton("Add");
+		  b13.setPreferredSize(new Dimension(60,18));
+		  jp.add(b13);
 		  return jp;
 	}
 	
@@ -239,9 +206,29 @@ public class Button extends LogWriter{
 	}
 	
 	public JPanel addButtonToPanel1(JPanel jp) {
-		  b3=this.getButton("Print");
-		  b3.setPreferredSize(new Dimension(100,20));
-		  jp.add(b3);
+		/*
+		 * b12=this.getButton("Print"); b12.setPreferredSize(new Dimension(100,20));
+		 * jp.add(b12);
+		 */
+		  
+		  b1=this.getButton("Update");
+		  b2=this.getButton("Delete");
+		  b5=this.getButton("Load Table");
+		  
+		  b1.setPreferredSize(new Dimension(100,18));
+		  b2.setPreferredSize(new Dimension(100,18));
+		  b5.setPreferredSize(new Dimension(100,18));
+		  
+		  Color color2 = new Color(240,128,128);
+		  Color color3 = new Color(255,215,0);
+		  
+		  b2.setBackground(color2);
+		  b5.setBackground(color3);
+		  
+		  jp.add(b2);
+		  jp.add(b1); 
+		  jp.add(b5);
+		  
 		  return jp;
 	}
 	

@@ -29,14 +29,14 @@ public class Label {
   public JPanel addLabelToPanel0(JPanel jp) {
 	  JLabel l0,l1,l2,l3,l4,l5,l6,l7;
 	  Label l=new Label();
-	  l0 = l.getLabel("          Date        ");
-	  l1 = l.getLabel("        Patient-Name      ");
+	  l0 = l.getLabel("         Date       ");
+	  l1 = l.getLabel("     Patient-Name    ");
 	  l2 = l.getLabel(" Full-Amount  ");
 	  l3 = l.getLabel(" Paid-Amount  ");
 	  l4 = l.getLabel(" Conc-Amount  ");
-	  l5 = l.getLabel(" Coll-Amount  ");
+	  l5 = l.getLabel("   Collection   ");
 	  l6 = l.getLabel(" Cut-Amount   ");
-	  l7 = l.getLabel("          Doctor's-Name       ");
+	  l7 = l.getLabel("     Doctor's-Name    ");
 	  jp.add(l0);
 	  jp.add(l1);
 	  jp.add(l2);

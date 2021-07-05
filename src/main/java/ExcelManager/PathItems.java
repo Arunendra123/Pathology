@@ -20,11 +20,11 @@ public class PathItems {
    private int fullAmount;
    private int paidAmount;
    private int concAmount;
-   private int collectionAmount;
+   private String collection;
    private int cutAmount;
    private String doctorName;
    
-   public PathItems(int indexNo,int day,int month,int year,String ptName,int fullAmount,int paidAmount,int concAmount,int cutAmount,int collectionAmount,String doctorName) {
+   public PathItems(int indexNo,int day,int month,int year,String ptName,int fullAmount,int paidAmount,int concAmount,int cutAmount,String collection,String doctorName) {
 	   this.indexNo=indexNo;
 	   this.day=day;
 	   this.month=month;
@@ -34,7 +34,7 @@ public class PathItems {
 	   this.paidAmount=paidAmount;
 	   this.concAmount=concAmount;
 	   this.cutAmount=cutAmount;
-	   this.collectionAmount=collectionAmount;
+	   this.collection=collection;
 	   this.doctorName=doctorName;
    }
    
@@ -81,8 +81,8 @@ public class PathItems {
    public int getCutAmount() {
 	   return cutAmount;
    }
-   public int getCollectionAmount() {
-	   return collectionAmount;
+   public String getCollection() {
+	   return collection;
    }
    public String getDoctorName() {
 	   return doctorName;
@@ -116,8 +116,8 @@ public class PathItems {
    public void setCutAmount(int cutAmount) {
 	   this.cutAmount=cutAmount;
    }
-   public void setCollectionAmount(int collectionAmount) {
-	   this.collectionAmount=collectionAmount;
+   public void setCollection(String collection) {
+	   this.collection=collection;
    }
    public void setDoctorName(String doctorName) {
 	   this.doctorName=doctorName;
@@ -133,7 +133,7 @@ public class PathItems {
 	   this.paidAmount=0;
 	   this.concAmount=0;
 	   this.cutAmount=0;
-	   this.collectionAmount=0;
+	   this.collection="";
 	   this.doctorName="unknown";
    }
    
@@ -146,7 +146,7 @@ public class PathItems {
 	   System.out.print(item.getPaidAmount()+"\t");
 	   System.out.print(item.getConcAmount()+"\t");
 	   System.out.print(item.getCutAmount()+"\t");
-	   System.out.print(item.getCollectionAmount()+"\t");
+	   System.out.print(item.getCollection()+"\t");
 	   System.out.print(item.getDoctorName()+"\t\n");
    }
    
@@ -164,7 +164,7 @@ public class PathItems {
 			   +"Pat Amt: "+item.getPaidAmount()+", "
 			   +"Con Amt: "+item.getConcAmount()+", "
 			   +"Cut Amt: "+item.getCutAmount()+", "
-			   +"Coll Amt: "+item.getCollectionAmount()+", "
+			   +"Collection: "+item.getCollection()+", "
 			   +"Doctor's Name: "+item.getDoctorName();
    }
 }

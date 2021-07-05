@@ -1,25 +1,13 @@
 package ViewLayer;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
 
-import ExcelManager.PathItems;
-
+import Operations.TableOperations;
+import Operations.TextAreaOperations;
+import Operations.TextOperations;
+import Operations.ValueLoader;
 
 public class Panel {
   public  JPanel getPanel(int a,int b,int c,int d){
@@ -54,9 +42,19 @@ public class Panel {
 	  return jp;
   }
   
-  public JPanel addButton0(JPanel jp) {
+  public JPanel addButtonInsert0(JPanel jp) {
 	  Button b=new Button();
-	  return b.addButtonToPanel0(jp);
+	  return b.addButtonToPanelInsert0(jp);
+  }
+  
+  public JPanel addButtonCUT0(JPanel jp) {
+	  Button b=new Button();
+	  return b.addButtonToPanelCUT0(jp);
+  }
+  
+  public JPanel addButtonAdd0(JPanel jp) {
+	  Button b=new Button();
+	  return b.addButtonToPanelAdd0(jp);
   }
   
   public JPanel addButton1(JPanel jp) {
@@ -111,14 +109,20 @@ public class Panel {
 	  return jp;
   }
   
-  public void loadInitialValues() {
-	  Text t=new Text();
-	  TextArea ta=new TextArea();
-	  Table tt=new Table();
+  public JPanel addComboBox00(JPanel jp) {
 	  ComboBox cb=new ComboBox();
-	  cb.loadComboBox();
-	  t.loadTextField();
-	  ta.loadTextArea();
-	  tt.loadTable();
+	  jp=cb.addComboBoxToPanel00(jp);
+	  return jp;
+  }
+  
+  public JPanel addComboBox000(JPanel jp) {
+	  ComboBox cb=new ComboBox();
+	  jp=cb.addComboBoxToPanel000(jp);
+	  return jp;
+  }
+  
+  public void loadInitialValues() {
+	  ValueLoader vl=new ValueLoader();
+	  vl.start();
   }
 }

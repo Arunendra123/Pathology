@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 
 import Base.PathProperties;
 
-public class LogWriter {
+public class  LogWriter{
 	
 	public static LogWriter lw;
 	static PrintStream out=null;

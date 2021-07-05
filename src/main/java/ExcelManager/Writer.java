@@ -33,7 +33,7 @@ public class Writer extends LogWriter{
         try {
 			this.out = new FileOutputStream(new File(ph.getOutputDirectoryPath()));
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			 LogWriter.WriteLogs("Class:Writer,Method:Writer"+e);
 		}
 	}
     
@@ -41,7 +41,7 @@ public class Writer extends LogWriter{
 		try {
 			this.out = new FileOutputStream(new File(ph.getOutputDirectoryPath()));
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			LogWriter.WriteLogs("Class:Writer,Method:setPath"+e);
 		}
 	}
 	
@@ -120,8 +120,8 @@ public class Writer extends LogWriter{
 	        Cell c2=row.createCell(1);c2.setCellValue("   Pt-Name   ");   c2.setCellStyle(style);
 	        Cell c3=row.createCell(2);c3.setCellValue("Full-Amt");        c3.setCellStyle(style);
 	        Cell c4=row.createCell(3);c4.setCellValue("Paid-Amt");        c4.setCellStyle(style);
-	        Cell c5=row.createCell(4);c5.setCellValue("Conc-Amt");        c5.setCellStyle(style);
-	        Cell c6=row.createCell(5);c6.setCellValue("Coll-Amt");        c6.setCellStyle(style);
+	        Cell c5=row.createCell(4);c5.setCellValue("Conc-Amt");      c5.setCellStyle(style);
+	        Cell c6=row.createCell(5);c6.setCellValue("Collection");        c6.setCellStyle(style);
 	        Cell c7=row.createCell(6);c7.setCellValue("Cut-Amt");         c7.setCellStyle(style);
 
 	        for(int colNum = 0; colNum<row.getLastCellNum();colNum++)   
@@ -144,7 +144,7 @@ public class Writer extends LogWriter{
 	            c3=row.createCell(2);c3.setCellValue(pi.getFullAmount());
 	            c4=row.createCell(3);c4.setCellValue(pi.getPaidAmount());
 	            c5=row.createCell(4);c5.setCellValue(pi.getConcAmount());
-	            c6=row.createCell(5);c6.setCellValue(pi.getCollectionAmount());
+	            c6=row.createCell(5);c6.setCellValue(pi.getCollection());
 	            c7=row.createCell(6);c7.setCellValue(pi.getCutAmount());
 	            
 	            c1.setCellStyle(style2);
@@ -246,7 +246,7 @@ public class Writer extends LogWriter{
 	        Cell c3=row.createCell(2);c3.setCellValue("Full-Amt");        c3.setCellStyle(style);
 	        Cell c4=row.createCell(3);c4.setCellValue("Paid-Amt");        c4.setCellStyle(style);
 	        Cell c5=row.createCell(4);c5.setCellValue("Conc-Amt");        c5.setCellStyle(style);
-	        Cell c6=row.createCell(5);c6.setCellValue("Coll-Amt");        c6.setCellStyle(style);
+	        Cell c6=row.createCell(5);c6.setCellValue("Collection");      c6.setCellStyle(style);
 	        Cell c7=row.createCell(6);c7.setCellValue("Cut-Amt");         c7.setCellStyle(style);
 
 	        for(int colNum = 0; colNum<row.getLastCellNum();colNum++)   
@@ -269,7 +269,7 @@ public class Writer extends LogWriter{
 	            c3=row.createCell(2);c3.setCellValue(pi.getFullAmount());
 	            c4=row.createCell(3);c4.setCellValue(pi.getPaidAmount());
 	            c5=row.createCell(4);c5.setCellValue(pi.getConcAmount());
-	            c6=row.createCell(5);c6.setCellValue(pi.getCollectionAmount());
+	            c6=row.createCell(5);c6.setCellValue(pi.getCollection());
 	            c7=row.createCell(6);c7.setCellValue(pi.getCutAmount());
 	            
 	            c1.setCellStyle(style2);
@@ -366,7 +366,7 @@ public class Writer extends LogWriter{
 	        Cell c3=row.createCell(2);c3.setCellValue("Full-Amt");        c3.setCellStyle(style);
 	        Cell c4=row.createCell(3);c4.setCellValue("Paid-Amt");        c4.setCellStyle(style);
 	        Cell c5=row.createCell(4);c5.setCellValue("Conc-Amt");        c5.setCellStyle(style);
-	        Cell c6=row.createCell(5);c6.setCellValue("Coll-Amt");        c6.setCellStyle(style);
+	        Cell c6=row.createCell(5);c6.setCellValue("Collection");      c6.setCellStyle(style);
 	        Cell c7=row.createCell(6);c7.setCellValue("Cut-Amt");         c7.setCellStyle(style);
 
 	        for(int colNum = 0; colNum<row.getLastCellNum();colNum++)   
@@ -389,7 +389,7 @@ public class Writer extends LogWriter{
 	            c3=row.createCell(2);c3.setCellValue(pi.getFullAmount());
 	            c4=row.createCell(3);c4.setCellValue(pi.getPaidAmount());
 	            c5=row.createCell(4);c5.setCellValue(pi.getConcAmount());
-	            c6=row.createCell(5);c6.setCellValue(pi.getCollectionAmount());
+	            c6=row.createCell(5);c6.setCellValue(pi.getCollection());
 	            c7=row.createCell(6);c7.setCellValue(pi.getCutAmount());
 	            
 	            c1.setCellStyle(style2);
@@ -487,9 +487,9 @@ public class Writer extends LogWriter{
    	        Cell c3=row.createCell(2);c3.setCellValue("Full-Amt");        c3.setCellStyle(style);
    	        Cell c4=row.createCell(3);c4.setCellValue("Paid-Amt");        c4.setCellStyle(style);
    	        Cell c5=row.createCell(4);c5.setCellValue("Conc-Amt");        c5.setCellStyle(style);
-   	        Cell c6=row.createCell(5);c6.setCellValue("Coll-Amt");        c6.setCellStyle(style);
+   	        Cell c6=row.createCell(5);c6.setCellValue("Collection");      c6.setCellStyle(style);
    	        Cell c7=row.createCell(6);c7.setCellValue("Cut-Amt");         c7.setCellStyle(style);
-   	        Cell c8=row.createCell(7);c8.setCellValue("Doctor's Name ");   c8.setCellStyle(style);
+   	        Cell c8=row.createCell(7);c8.setCellValue("Doctor's Name ");  c8.setCellStyle(style);
 
    	        for(int colNum = 0; colNum<row.getLastCellNum();colNum++)   
    	            workbook.getSheetAt(0).autoSizeColumn(colNum);
@@ -511,7 +511,7 @@ public class Writer extends LogWriter{
    	            c3=row.createCell(2);c3.setCellValue(pi.getFullAmount());
    	            c4=row.createCell(3);c4.setCellValue(pi.getPaidAmount());
    	            c5=row.createCell(4);c5.setCellValue(pi.getConcAmount());
-   	            c6=row.createCell(5);c6.setCellValue(pi.getCollectionAmount());
+   	            c6=row.createCell(5);c6.setCellValue(pi.getCollection());
    	            c7=row.createCell(6);c7.setCellValue(pi.getCutAmount());
    	            c8=row.createCell(7);c8.setCellValue(pi.getDoctorName());
    	         
